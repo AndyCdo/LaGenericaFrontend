@@ -1,6 +1,6 @@
 import React from "react";
 import ImageBackground from "../../Assets/background.jpg";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 
 const Reports = () => {
@@ -35,6 +35,39 @@ const Reports = () => {
           </Nav>
         </Container>
       </Navbar>
+
+      <div
+        style={{
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          display: "flex",
+          width: "50%",
+          marginTop: 30,
+          height: 150,
+          marginRight: "auto",
+          marginLeft: "auto",
+        }}
+      >
+        <Button
+          onClick={() => {
+            //navigate("/login/Bogotá");
+          }}
+          style={{ width: 300, fontWeight: "bold" }}
+          variant="outline-primary"
+        >
+          Listado de clientes
+        </Button>
+        <Button
+          onClick={() => {
+            //navigate("/login/Medellín");
+          }}
+          style={{ width: 300, fontWeight: "bold" }}
+          variant="outline-success"
+        >
+          Ventas por Cliente
+        </Button>
+      </div>
     </>
   );
 };

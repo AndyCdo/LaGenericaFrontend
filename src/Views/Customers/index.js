@@ -1,9 +1,16 @@
 import React from "react";
 import ImageBackground from "../../Assets/background.jpg";
-import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav,
+  Form,
+  Button,
+  Row,
+  Col,
+} from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { create, read, remove, update } from "../../Services/customers";
 
 const Customers = () => {
   return (
@@ -54,7 +61,6 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10 }}
               type="text"
-              placeholder="Normal text"
             />
           </Col>
 
@@ -65,12 +71,11 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10 }}
               type="text"
-              placeholder="Normal text"
             />
           </Col>
         </Row>
 
-        <Row>
+        <Row style={{ display: "flex", justifyContent: "center" }}>
           <Form.Label column sm="2">
             Nombre Completo
           </Form.Label>
@@ -78,7 +83,6 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10, marginTop: 20 }}
               type="text"
-              placeholder="Normal text"
             />
           </Col>
           <Form.Label column sm="2">
@@ -88,7 +92,6 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10, marginTop: 20 }}
               type="text"
-              placeholder="Normal text"
             />
           </Col>
         </Row>
@@ -101,7 +104,6 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10, marginTop: 10 }}
               type="text"
-              placeholder="Normal text"
             />
           </Col>
 

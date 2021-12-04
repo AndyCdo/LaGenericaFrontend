@@ -1,6 +1,14 @@
 import React from "react";
 import ImageBackground from "../../Assets/background.jpg";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav,
+  Form,
+  Button,
+  Row,
+  Col,
+} from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 
 const Sales = () => {
@@ -35,6 +43,60 @@ const Sales = () => {
           </Nav>
         </Container>
       </Navbar>
+
+      <Container
+        style={{
+          flexDirection: "row",
+          width: "100%",
+          marginTop: "70px",
+          fontWeight: "bold",
+        }}
+      >
+        <Row>
+          <Form.Label column sm="1">
+            Cédula
+          </Form.Label>
+          <Col sm="1">
+            <Form.Control
+              style={{ width: "300px", marginLeft: 10 }}
+              type="text"
+              placeholder="Normal text"
+            />
+          </Col>
+
+          <Col sm="1">
+            <Button
+              style={{ width: "300px", marginLeft: 10 }}
+              type="text"
+              placeholder="Normal text"
+            >
+              Consultar
+            </Button>
+          </Col>
+
+          <Form.Label column sm="1">
+            Cliente
+          </Form.Label>
+          <Col sm="1">
+            <Form.Control
+              style={{ width: "300px", marginLeft: 10 }}
+              type="text"
+              placeholder="Normal text"
+            />
+          </Col>
+
+          <Form.Label column sm="1">
+            Consec.
+          </Form.Label>
+          <Col sm="1">
+            <Form.Control
+              style={{ width: "300px", marginLeft: 10 }}
+              type="text"
+              placeholder="Normal text"
+            />
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };
