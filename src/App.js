@@ -1,4 +1,3 @@
-// test
 import "./App.css";
 import Routing from "./Routing";
 
