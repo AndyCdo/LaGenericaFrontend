@@ -110,23 +110,30 @@ const Customers = () => {
 
         <Row
           style={{
-            marginTop: 30,
-            alignContent: "center",
-            flexDirection: "row",
-            fontWeight: "bold",
+            marginTop: 50,
           }}
         >
-          <div className="mb-2">
+          <div
+            className="mb-2"
+            style={{
+              justifyContent: "center",
+              flexDirection: "row",
+              alignItems: "center",
+              display: "flex",
+              fontWeight: "bold",
+              width: "100%",
+            }}
+          >
             <Button variant="primary" size="lg">
               Consultar
             </Button>
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" style={{ marginLeft: 20 }}>
               Crear
             </Button>
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" style={{ marginLeft: 20 }}>
               Actualizar
             </Button>
-            <Button variant="danger" size="lg">
+            <Button variant="danger" size="lg" style={{ marginLeft: 20 }}>
               Borrar
             </Button>
           </div>
