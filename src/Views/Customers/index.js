@@ -1,6 +1,6 @@
 import React from "react";
 import ImageBackground from "../../Assets/background.jpg";
-import { Navbar, Container, Nav, Form } from "react-bootstrap";
+import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -107,7 +107,30 @@ const Customers = () => {
 
           <Col sm="6" />
         </Row>
-        <Row>Aca debo crear los botones</Row>
+
+        <Row
+          style={{
+            marginTop: 30,
+            alignContent: "center",
+            flexDirection: "row",
+            fontWeight: "bold",
+          }}
+        >
+          <div className="mb-2">
+            <Button variant="primary" size="lg">
+              Consultar
+            </Button>
+            <Button variant="primary" size="lg">
+              Crear
+            </Button>
+            <Button variant="primary" size="lg">
+              Actualizar
+            </Button>
+            <Button variant="danger" size="lg">
+              Borrar
+            </Button>
+          </div>
+        </Row>
       </Container>
     </>
   );
