@@ -1,6 +1,6 @@
 import React from "react";
 import ImageBackground from "../../Assets/background.jpg";
-import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, Button, Row, Col } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 
 const Reports = () => {
@@ -31,7 +31,9 @@ const Reports = () => {
             <Nav.Link href="/sales">Ventas</Nav.Link>
             <Nav.Link href="/products">Productos</Nav.Link>
             <Nav.Link href="/customers">Clientes</Nav.Link>
-            <Nav.Link href="/reports">Reportes</Nav.Link>
+            <Nav.Link active href="/reports">
+              Reportes
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -49,24 +51,30 @@ const Reports = () => {
           marginLeft: "auto",
         }}
       >
-        <Button
-          onClick={() => {
-            //navigate("/login/Bogotá");
-          }}
-          style={{ width: 300, fontWeight: "bold" }}
-          variant="outline-primary"
-        >
-          Listado de clientes
-        </Button>
-        <Button
-          onClick={() => {
-            //navigate("/login/Medellín");
-          }}
-          style={{ width: 300, fontWeight: "bold" }}
-          variant="outline-success"
-        >
-          Ventas por Cliente
-        </Button>
+        <Container>
+          <Row>
+            <Col sm="6" xs="12">
+              <Button
+                className="mb-3 w-100"
+                onClick={() => {}}
+                style={{ fontWeight: "bold" }}
+                variant="outline-primary"
+              >
+                Listado de clientes
+              </Button>
+            </Col>
+            <Col sm="6" xs="12">
+              <Button
+                className="mb-3 w-100"
+                onClick={() => {}}
+                style={{ fontWeight: "bold" }}
+                variant="outline-success"
+              >
+                Ventas por Cliente
+              </Button>
+            </Col>
+          </Row>
+        </Container>
       </div>
     </>
   );

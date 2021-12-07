@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageBackground from "../../Assets/background.jpg";
 import {
   Navbar,
@@ -10,8 +10,16 @@ import {
   Col,
 } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
+import { Snackbar, Alert } from "@mui/material";
 
 const Sales = () => {
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    open: false,
+    severity: "error",
+    message: "",
+  });
+
   return (
     <>
       <img
@@ -36,7 +44,9 @@ const Sales = () => {
           <Nav className="me-auto">
             <Nav.Link href="/user">Usuarios</Nav.Link>
             <Nav.Link href="/provider">Proveedores</Nav.Link>
-            <Nav.Link href="/sales">Ventas</Nav.Link>
+            <Nav.Link active href="/sales">
+              Ventas
+            </Nav.Link>
             <Nav.Link href="/products">Productos</Nav.Link>
             <Nav.Link href="/customers">Clientes</Nav.Link>
             <Nav.Link href="/reports">Reportes</Nav.Link>
@@ -44,230 +54,182 @@ const Sales = () => {
         </Container>
       </Navbar>
 
-      <Container
-        style={{
-          flexDirection: "row",
-          width: "80%",
-          marginTop: "70px",
-          fontWeight: "bold",
-        }}
-      >
+      <Container style={{ padding: 20, marginTop: "70px", fontWeight: "bold" }}>
         <Row>
-          <Form.Label style={{ marginLeft: 10 }} column sm="1">
-            Cédula
-          </Form.Label>
-          <Col sm="2">
-            <Form.Control style={{ width: "200px" }} type="text" />
+          <Col sm="3">
+            <Form.Group className="mb-3 w-100">
+              <Form.Label>Cédula</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-
           <Col sm="2">
-            <Button style={{ width: "100px", marginLeft: 20 }} type="text">
+            <Button className="w-100" style={{ marginTop: 30 }} type="text">
               Consultar
             </Button>
           </Col>
-
-          <Form.Label style={{ marginLeft: 10 }} column sm="1">
-            Cliente
-          </Form.Label>
-          <Col sm="2">
-            <Form.Control style={{ width: "200px" }} type="text" />
+          <Col sm="4">
+            <Form.Group className="mb-3 w-100">
+              <Form.Label>Cliente</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-
-          <Form.Label style={{ marginLeft: 20 }} column sm="1">
-            Consec.
-          </Form.Label>
-          <Col sm="2">
-            <Form.Control style={{ width: "100px" }} type="text" />
+          <Col sm="3">
+            <Form.Group className="mb-3 w-100">
+              <Form.Label>Consecutivo</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
         </Row>
-
-        <Row
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
-            display: "flex",
-            width: "90%",
-            marginTop: "40px",
-          }}
-        >
-          <Form.Label column sm="2" style={{ marginTop: 30 }}>
-            Cod. Producto
-          </Form.Label>
-
-          <Form.Label column sm="2" style={{ marginTop: 30 }} />
-
-          <Form.Label column sm="3" style={{ marginTop: 30 }}>
-            Nombre Producto
-          </Form.Label>
-
-          <Form.Label column sm="3" style={{ marginTop: 30 }}>
-            Cant.
-          </Form.Label>
-
-          <Form.Label column sm="2" style={{ marginTop: 30 }}>
-            Vlr. Total
-          </Form.Label>
-
-          <Col sm="2">
-            <Form.Control style={{ width: "200px" }} type="text" />
+        <Row style={{ marginTop: 50 }}>
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Label>Cod. Producto</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-
-          <Col sm="2">
-            <Button style={{ width: "100px", marginLeft: 40 }} type="text">
+          <Col>
+            <Button className="w-100" style={{ marginTop: 30 }} type="text">
               Consultar
             </Button>
           </Col>
-
-          <Col sm="3">
-            <Form.Control style={{ width: "200px" }} type="text" />
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Label>Nombre Producto</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-          <Col sm="3">
-            <Form.Control
-              style={{ width: "200px", marginTop: 10 }}
-              type="text"
-            />
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Label>Cantidad</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-          <Col sm="2">
-            <Form.Control style={{ width: "200px" }} type="text" />
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Label>Valor Total</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-
-          <Col sm="2">
-            <Form.Control
-              style={{ width: "200px", marginTop: 10 }}
-              type="text"
-            />
+        </Row>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-
-          <Col sm="2">
-            <Button
-              style={{ width: "100px", marginLeft: 40, marginTop: 10 }}
-              type="text"
-            >
+          <Col>
+            <Button className="w-100" type="text">
               Consultar
             </Button>
           </Col>
-
-          <Col sm="3">
-            <Form.Control style={{ width: "200px" }} type="text" />
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-          <Col sm="3">
-            <Form.Control
-              style={{ width: "200px", marginTop: 10 }}
-              type="text"
-            />
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-          <Col sm="2">
-            <Form.Control style={{ width: "200px" }} type="text" />
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-
-          <Col sm="2">
-            <Form.Control
-              style={{ width: "200px", marginTop: 10 }}
-              type="text"
-            />
+        </Row>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-
-          <Col sm="2">
-            <Button
-              style={{ width: "100px", marginLeft: 40, marginTop: 10 }}
-              type="text"
-            >
+          <Col>
+            <Button className="w-100" type="text">
               Consultar
             </Button>
           </Col>
-
-          <Col sm="3">
-            <Form.Control style={{ width: "200px" }} type="text" />
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-          <Col sm="3">
-            <Form.Control
-              style={{ width: "200px", marginTop: 10 }}
-              type="text"
-            />
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
-          <Col sm="2">
-            <Form.Control style={{ width: "200px" }} type="text" />
-          </Col>
-        </Row>
-
-        <Row
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
-            display: "flex",
-            width: "83%",
-            marginTop: "30px",
-          }}
-        >
-          <Col sm="8" />
-          <Form.Label style={{ width: "200px", marginLeft: 20 }} column sm="2">
-            Total Venta
-          </Form.Label>
-          <Col sm="1">
-            <Form.Control style={{ width: "200px" }} type="text" />
+          <Col>
+            <Form.Group className="mb-3 w-100">
+              <Form.Control type="text" />
+            </Form.Group>
           </Col>
         </Row>
-
-        <Row
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
-            display: "flex",
-            width: "83%",
-            marginTop: "10px",
-          }}
-        >
-          <Col sm="8" />
-          <Form.Label style={{ width: "200px", marginLeft: 20 }} column sm="2">
-            Total IVA
-          </Form.Label>
-          <Col sm="1">
-            <Form.Control style={{ width: "200px" }} type="text" />
+        <Row>
+          <Col xs="12" sm="8" />
+          <Col xs="2">
+            <Form.Label>Total Venta</Form.Label>
+          </Col>
+          <Col xs="2">
+            <Form.Control className="mb-3 w-100" type="text" />
           </Col>
         </Row>
-
-        <Row
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
-            display: "flex",
-            width: "83%",
-            marginTop: "10px",
-          }}
-        >
-          <Col sm="8" />
-          <Form.Label style={{ width: "200px", marginLeft: 20 }} column sm="2">
-            Total con IVA
-          </Form.Label>
-          <Col sm="1">
-            <Form.Control style={{ width: "200px" }} type="text" />
+        <Row>
+          <Col xs="12" sm="8" />
+          <Col xs="2">
+            <Form.Label>Total IVA</Form.Label>
+          </Col>
+          <Col xs="2">
+            <Form.Control className="mb-3 w-100" type="text" />
           </Col>
         </Row>
-
-        <Row
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
-            display: "flex",
-            width: "83%",
-            marginTop: "10px",
-          }}
-        >
-          <Col sm="2">
+        <Row>
+          <Col xs="12" sm="8" />
+          <Col xs="2">
+            <Form.Label>Total con IVA</Form.Label>
+          </Col>
+          <Col xs="2">
+            <Form.Control className="mb-3 w-100" type="text" />
+          </Col>
+        </Row>
+        <Row>
+          <div
+            className="mb-2"
+            style={{
+              justifyContent: "center",
+              flexDirection: "row",
+              alignItems: "center",
+              display: "flex",
+              fontWeight: "bold",
+              width: "100%",
+            }}
+          >
             <Button
               style={{ width: "200px", marginLeft: 40, marginTop: 10 }}
               type="text"
             >
               Confirmar
             </Button>
-          </Col>
+          </div>
         </Row>
       </Container>
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={6000}
+        onClose={() => {
+          setAlert({ ...alert, open: false, message: "" });
+        }}
+      >
+        <Alert
+          onClose={() => {
+            setAlert({ ...alert, open: false, message: "" });
+          }}
+          severity={alert.severity}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

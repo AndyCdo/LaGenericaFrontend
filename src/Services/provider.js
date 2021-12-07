@@ -1,19 +1,19 @@
 import api from "./api";
 
 export const create = (data) => {
-  return api.post("/provider", data);
+  return api.post("/providers", data);
 };
 
 export const read = (id) => {
-  return api.get(`/provider/${id}`);
+  return api.get(`/providers/${id}`);
 };
 
 export const readAll = () => {
-  return api.get("/provider");
+  return api.get("/providers");
 };
 
 export const update = (id, data) => {
-  return api.put(`/provider/${id}`, data);
+  return api.put(`/providers/${id}`, data);
 };
 
 export const remove = (id) => {

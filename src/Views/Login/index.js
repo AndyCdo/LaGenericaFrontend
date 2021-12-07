@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import ImageBackground from "../../Assets/background.jpg";
 import { useNavigate } from "react-router-dom";
-import { Form } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Form, Spinner, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { auth } from "../../Services/user";
-import { Snackbar } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 
 const Login = () => {
   let navigate = useNavigate();
   let { sede } = useParams();
 
+  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({
@@ -21,8 +21,18 @@ const Login = () => {
 
   const loginRequest = async () => {
     try {
+      setLoading(true);
       const result = await auth(username, password);
-      navigate("/products");
+      if (result.data.identification) {
+        navigate("/products");
+      } else {
+        setAlert({
+          ...alert,
+          severity: "error",
+          message: "No se pudo autenticar el usuario",
+          open: true,
+        });
+      }
     } catch {
       setAlert({
         ...alert,
@@ -31,6 +41,7 @@ const Login = () => {
         open: true,
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -74,8 +85,7 @@ const Login = () => {
       >
         <h5 style={{ textAlign: "center" }}>Ingresa Tus Datos</h5>
       </div>
-
-      <Form
+      <div
         style={{
           display: "flex",
           alignItems: "center",
@@ -85,52 +95,72 @@ const Login = () => {
           marginTop: "50px",
         }}
       >
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label style={{ fontWeight: "bold", width: 500 }}>
-            Usuario
-          </Form.Label>
-          <Form.Control
-            placeholder="Enter email"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label style={{ fontWeight: "bold", width: 500 }}>
-            Contraseña
-          </Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </Form.Group>
-
-        <Button
-          onClick={() => {
-            loginRequest();
+        <Form
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+            width: "300px",
           }}
-          variant="primary"
         >
-          Iniciar Sesión
-        </Button>
-      </Form>
+          <Form.Group className="mb-3 w-100">
+            <Form.Label style={{ fontWeight: "bold" }}>Usuario</Form.Label>
+            <Form.Control
+              disabled={loading}
+              placeholder="Enter email"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
+          </Form.Group>
 
+          <Form.Group className="mb-3 w-100">
+            <Form.Label style={{ fontWeight: "bold" }}>Contraseña</Form.Label>
+            <Form.Control
+              disabled={loading}
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </Form.Group>
+
+          <Button
+            disabled={loading}
+            onClick={() => {
+              loginRequest();
+            }}
+            variant="primary"
+          >
+            {loading ? (
+              <Spinner animation="border" role="status" />
+            ) : (
+              "Iniciar Sesión"
+            )}
+          </Button>
+        </Form>
+      </div>
       <Snackbar
         open={alert.open}
         autoHideDuration={6000}
         onClose={() => {
           setAlert({ ...alert, open: false, message: "" });
         }}
-        message={alert.message}
-        severity={alert.severity}
-      ></Snackbar>
+      >
+        <Alert
+          onClose={() => {
+            setAlert({ ...alert, open: false, message: "" });
+          }}
+          severity={alert.severity}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

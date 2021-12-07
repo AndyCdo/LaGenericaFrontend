@@ -8,11 +8,14 @@ import {
   Button,
   Row,
   Col,
+  Spinner,
 } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
+import { Snackbar, Alert } from "@mui/material";
 import { create, read, remove, update } from "../../Services/customers";
 
 const Customers = () => {
+  const [loading, setLoading] = useState(false);
   const [id, setId] = useState("");
   const [telephone, setTelephone] = useState("");
   const [name, setName] = useState("");
@@ -26,6 +29,8 @@ const Customers = () => {
 
   const createRequest = async () => {
     try {
+      setLoading(true);
+
       const data = {
         identification: id,
         phone: telephone,
@@ -34,18 +39,36 @@ const Customers = () => {
         address: address,
       };
       const result = await create(data);
+      if (result.data) {
+        setAlert({
+          ...alert,
+          severity: "success",
+          message: "Se ha creado el cliente",
+          open: true,
+        });
+      } else {
+        setAlert({
+          ...alert,
+          severity: "error",
+          message: "No se pudo crear el cliente",
+          open: true,
+        });
+      }
     } catch {
       setAlert({
         ...alert,
         severity: "error",
-        message: "No se pudo crear el usuario",
+        message: "No se pudo crear el cliente",
         open: true,
       });
     }
+    setLoading(false);
   };
 
   const updateRequest = async () => {
     try {
+      setLoading(true);
+
       const data = {
         identification: id,
         phone: telephone,
@@ -54,40 +77,101 @@ const Customers = () => {
         address: address,
       };
       const result = await update(id, data);
+      if (result.data) {
+        setAlert({
+          ...alert,
+          severity: "success",
+          message: "Se ha actualizado el cliente",
+          open: true,
+        });
+      } else {
+        setAlert({
+          ...alert,
+          severity: "error",
+          message: "No se pudo actualizar el cliente",
+          open: true,
+        });
+      }
     } catch {
       setAlert({
         ...alert,
         severity: "error",
-        message: "No se pudo actualizar el usuario",
+        message: "No se pudo actualizar el cliente",
         open: true,
       });
     }
+    setLoading(false);
   };
 
   const readRequest = async () => {
     try {
+      setLoading(true);
+
       const result = await read(id);
+      if (result.data) {
+        setId(result.data.identification);
+        setAddress(result.data.address);
+        setEmail(result.data.email);
+        setName(result.data.name);
+        setTelephone(result.data.phone);
+      } else {
+        setId("");
+        setAddress("");
+        setEmail("");
+        setName("");
+        setTelephone("");
+        setAlert({
+          ...alert,
+          severity: "error",
+          message: "No se pudo consultar el cliente",
+          open: true,
+        });
+      }
     } catch {
       setAlert({
         ...alert,
         severity: "error",
-        message: "No se pudo leer el usuario",
+        message: "No se pudo leer el cliente",
         open: true,
       });
     }
+    setLoading(false);
   };
 
   const removeRequest = async () => {
     try {
+      setLoading(true);
+
       const result = await remove(id);
+      if (result.data) {
+        setId("");
+        setAddress("");
+        setEmail("");
+        setName("");
+        setTelephone("");
+        setAlert({
+          ...alert,
+          severity: "success",
+          message: "Se ha eliminado el cliente",
+          open: true,
+        });
+      } else {
+        setAlert({
+          ...alert,
+          severity: "error",
+          message: "No se pudo eliminar el cliente",
+          open: true,
+        });
+      }
     } catch {
       setAlert({
         ...alert,
         severity: "error",
-        message: "No se pudo eliminar el usuario",
+        message: "No se pudo eliminar el cliente",
         open: true,
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -116,7 +200,9 @@ const Customers = () => {
             <Nav.Link href="/provider">Proveedores</Nav.Link>
             <Nav.Link href="/sales">Ventas</Nav.Link>
             <Nav.Link href="/products">Productos</Nav.Link>
-            <Nav.Link href="/customers">Clientes</Nav.Link>
+            <Nav.Link active href="/customers">
+              Clientes
+            </Nav.Link>
             <Nav.Link href="/reports">Reportes</Nav.Link>
           </Nav>
         </Container>
@@ -131,79 +217,86 @@ const Customers = () => {
         }}
       >
         <Row>
-          <Form.Label column sm="2">
-            Cédula
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              style={{ width: "300px", marginLeft: 10 }}
-              type="text"
-              onChange={(e) => {
-                setId(e.target.value);
-              }}
-              value={id}
-            />
+          <Col xs="12" sm="6">
+            <Form.Group className="mb-3 w-100">
+              <Form.Label column sm="2">
+                Cédula
+              </Form.Label>
+              <Form.Control
+                disabled={loading}
+                type="text"
+                onChange={(e) => {
+                  setId(e.target.value);
+                }}
+                value={id}
+              />
+            </Form.Group>
           </Col>
-
-          <Form.Label column sm="2">
-            Teléfono
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              style={{ width: "300px", marginLeft: 10 }}
-              type="text"
-              onChange={(e) => {
-                setTelephone(e.target.value);
-              }}
-              value={telephone}
-            />
-          </Col>
-        </Row>
-
-        <Row style={{ display: "flex", justifyContent: "center" }}>
-          <Form.Label column sm="2">
-            Nombre Completo
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              style={{ width: "300px", marginLeft: 10, marginTop: 20 }}
-              type="text"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              value={name}
-            />
-          </Col>
-          <Form.Label column sm="2">
-            Correo Electrónico
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              style={{ width: "300px", marginLeft: 10, marginTop: 20 }}
-              type="text"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              value={email}
-            />
+          <Col xs="12" sm="6">
+            <Form.Group className="mb-3 w-100">
+              <Form.Label column sm="2">
+                Teléfono
+              </Form.Label>
+              <Form.Control
+                disabled={loading}
+                type="text"
+                onChange={(e) => {
+                  setTelephone(e.target.value);
+                }}
+                value={telephone}
+              />
+            </Form.Group>
           </Col>
         </Row>
 
         <Row>
-          <Form.Label column sm="2">
-            Dirección
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              style={{ width: "300px", marginLeft: 10, marginTop: 10 }}
-              type="text"
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-              value={address}
-            />
+          <Col xs="12" sm="6">
+            <Form.Group className="mb-3">
+              <Form.Label>Nombre Completo</Form.Label>
+              <Form.Control
+                disabled={loading}
+                style={{ marginTop: 20 }}
+                type="text"
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                value={name}
+              />
+            </Form.Group>
           </Col>
+          <Col xs="12" sm="6">
+            <Form.Group className="mb-3">
+              <Form.Label>Correo Electrónico</Form.Label>
+              <Form.Control
+                disabled={loading}
+                style={{ marginTop: 20 }}
+                type="text"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                value={email}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
 
+        <Row>
+          <Col xs="12" sm="6">
+            <Form.Group className="mb-3 w-100">
+              <Form.Label column sm="2">
+                Dirección
+              </Form.Label>
+              <Form.Control
+                disabled={loading}
+                style={{ marginTop: 10 }}
+                type="text"
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+                value={address}
+              />
+            </Form.Group>
+          </Col>
           <Col sm="6" />
         </Row>
 
@@ -224,6 +317,7 @@ const Customers = () => {
             }}
           >
             <Button
+              disabled={loading}
               variant="primary"
               size="lg"
               onClick={() => {
@@ -233,6 +327,7 @@ const Customers = () => {
               Consultar
             </Button>
             <Button
+              disabled={loading}
               variant="primary"
               size="lg"
               style={{ marginLeft: 20 }}
@@ -240,9 +335,10 @@ const Customers = () => {
                 createRequest();
               }}
             >
-              Crear
+              {loading ? <Spinner animation="border" role="status" /> : "Crear"}
             </Button>
             <Button
+              disabled={loading}
               variant="primary"
               size="lg"
               style={{ marginLeft: 20 }}
@@ -250,9 +346,14 @@ const Customers = () => {
                 updateRequest();
               }}
             >
-              Actualizar
+              {loading ? (
+                <Spinner animation="border" role="status" />
+              ) : (
+                "Actualizar"
+              )}
             </Button>
             <Button
+              disabled={loading}
               variant="danger"
               size="lg"
               style={{ marginLeft: 20 }}
@@ -260,11 +361,32 @@ const Customers = () => {
                 removeRequest();
               }}
             >
-              Borrar
+              {loading ? (
+                <Spinner animation="border" role="status" />
+              ) : (
+                "Borrar"
+              )}
             </Button>
           </div>
         </Row>
       </Container>
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={6000}
+        onClose={() => {
+          setAlert({ ...alert, open: false, message: "" });
+        }}
+      >
+        <Alert
+          onClose={() => {
+            setAlert({ ...alert, open: false, message: "" });
+          }}
+          severity={alert.severity}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
