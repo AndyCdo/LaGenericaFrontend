@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImageBackground from "../../Assets/background.jpg";
 import {
   Navbar,
@@ -9,12 +9,13 @@ import {
   Row,
   Col,
   Spinner,
+  Table,
 } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Snackbar, Alert } from "@mui/material";
 
-import { create, read, remove, update } from "../../Services/provider";
+import { create, read, remove, update, readAll } from "../../Services/provider";
 
 const Provider = () => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,23 @@ const Provider = () => {
     message: "",
   });
 
+  const [list, setList] = useState(null);
+
+  useEffect(() => {
+    if (list === null) {
+      readAllRequest();
+    }
+  }, [list]);
+
+  const readAllRequest = async () => {
+    try {
+      const result = await readAll();
+      if (result.data) {
+        setList(result.data);
+      }
+    } catch {}
+  };
+
   const createRequest = async () => {
     setLoading(true);
     try {
@@ -39,6 +57,7 @@ const Provider = () => {
         address: address,
       };
       const result = await create(data);
+      setList(null);
       if (result.data) {
         setAlert({
           ...alert,
@@ -76,6 +95,7 @@ const Provider = () => {
         address: address,
       };
       const result = await update(nit, data);
+      setList(null);
       if (result.data) {
         setAlert({
           ...alert,
@@ -140,6 +160,7 @@ const Provider = () => {
 
     try {
       const result = await remove(nit);
+      setList(null);
       if (result.data) {
         setNit("");
         setAddress("");
@@ -200,7 +221,7 @@ const Provider = () => {
             <Nav.Link href="/products">Productos</Nav.Link>
             <Nav.Link href="/customers">Clientes</Nav.Link>
             <Nav.Link href="/reports">Reportes</Nav.Link>
-            <Nav.Link href="/reports">Consolidación</Nav.Link>
+            <Nav.Link href="/consolidated">Consolidación</Nav.Link>
             <Navbar.Brand href="/welcome" style={{ marginLeft: 20 }}>
               <LogoutIcon />
             </Navbar.Brand>
@@ -284,7 +305,7 @@ const Provider = () => {
 
         <Row
           style={{
-            marginTop: 50,
+            marginTop: 20,
           }}
         >
           <div
@@ -350,6 +371,41 @@ const Provider = () => {
               )}
             </Button>
           </div>
+        </Row>
+
+        <Row>
+          <Table
+            striped
+            bordered
+            hover
+            style={{
+              marginTop: 20,
+              alignContent: "center",
+              justifyContent: "center",
+            }}
+          >
+            <thead>
+              <tr>
+                <th>NIT</th>
+                <th>TELÉFONO</th>
+                <th>NOMBRE</th>
+                <th>DIRECCIÓN</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {list?.map((item) => {
+                return (
+                  <tr>
+                    <td>{item.nit}</td>
+                    <td>{item.phone}</td>
+                    <td>{item.name}</td>
+                    <td>{item.address}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
         </Row>
       </Container>
       <Snackbar

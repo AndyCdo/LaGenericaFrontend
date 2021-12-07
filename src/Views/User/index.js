@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImageBackground from "../../Assets/background.jpg";
 import {
   Navbar,
@@ -9,11 +9,12 @@ import {
   Row,
   Col,
   Spinner,
+  Table,
 } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Snackbar, Alert } from "@mui/material";
-import { create, read, remove, update } from "../../Services/user";
+import { create, read, remove, update, readAll } from "../../Services/user";
 
 const User = () => {
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,22 @@ const User = () => {
     severity: "error",
     message: "",
   });
+  const [list, setList] = useState(null);
+
+  useEffect(() => {
+    if (list === null) {
+      readAllRequest();
+    }
+  }, [list]);
+
+  const readAllRequest = async () => {
+    try {
+      const result = await readAll();
+      if (result.data) {
+        setList(result.data);
+      }
+    } catch {}
+  };
 
   const createRequest = async () => {
     try {
@@ -38,6 +55,7 @@ const User = () => {
         password: password,
       };
       const result = await create(data);
+      setList(null);
       if (result.data) {
         setAlert({
           ...alert,
@@ -75,6 +93,7 @@ const User = () => {
         password: password,
       };
       const result = await update(id, data);
+      setList(null);
       if (result.data) {
         setAlert({
           ...alert,
@@ -138,6 +157,7 @@ const User = () => {
       setLoading(true);
 
       const result = await remove(id);
+      setList(null);
       if (result.data) {
         setId("");
         setEmail("");
@@ -197,7 +217,7 @@ const User = () => {
             <Nav.Link href="/products">Productos</Nav.Link>
             <Nav.Link href="/customers">Clientes</Nav.Link>
             <Nav.Link href="/reports">Reportes</Nav.Link>
-            <Nav.Link href="/reports">Consolidación</Nav.Link>
+            <Nav.Link href="/consolidated">Consolidación</Nav.Link>
             <Navbar.Brand href="/welcome" style={{ marginLeft: 20 }}>
               <LogoutIcon />
             </Navbar.Brand>
@@ -261,7 +281,7 @@ const User = () => {
 
         <Row
           style={{
-            marginTop: 50,
+            marginTop: 20,
           }}
         >
           <div
@@ -327,6 +347,41 @@ const User = () => {
               )}
             </Button>
           </div>
+        </Row>
+
+        <Row>
+          <Table
+            striped
+            bordered
+            hover
+            style={{
+              marginTop: 20,
+              alignContent: "center",
+              justifyContent: "center",
+            }}
+          >
+            <thead>
+              <tr>
+                <th>CEDULA</th>
+                <th>NOMBRE</th>
+                <th>EMAIL</th>
+                <th>CONTRASEÑA</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {list?.map((item) => {
+                return (
+                  <tr>
+                    <td>{item.identification}</td>
+                    <td>{item.username}</td>
+                    <td>{item.email}</td>
+                    <td>{item.password}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
         </Row>
       </Container>
       <Snackbar

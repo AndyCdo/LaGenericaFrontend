@@ -45,7 +45,7 @@ const Reports = () => {
             <Nav.Link active href="/reports">
               Reportes
             </Nav.Link>
-            <Nav.Link href="/reports">Consolidación</Nav.Link>
+            <Nav.Link href="/consolidated">Consolidación</Nav.Link>
             <Navbar.Brand href="/welcome" style={{ marginLeft: 20 }}>
               <LogoutIcon />
             </Navbar.Brand>

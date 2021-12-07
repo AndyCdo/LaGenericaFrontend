@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImageBackground from "../../Assets/background.jpg";
 import {
   Navbar,
@@ -9,11 +9,18 @@ import {
   Row,
   Col,
   Spinner,
+  Table,
 } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Snackbar, Alert } from "@mui/material";
-import { create, read, remove, update } from "../../Services/customers";
+import {
+  create,
+  read,
+  remove,
+  update,
+  readAll,
+} from "../../Services/customers";
 
 const Customers = () => {
   const [loading, setLoading] = useState(false);
@@ -28,6 +35,23 @@ const Customers = () => {
     message: "",
   });
 
+  const [list, setList] = useState(null);
+
+  useEffect(() => {
+    if (list === null) {
+      readAllRequest();
+    }
+  }, [list]);
+
+  const readAllRequest = async () => {
+    try {
+      const result = await readAll();
+      if (result.data) {
+        setList(result.data);
+      }
+    } catch {}
+  };
+
   const createRequest = async () => {
     try {
       setLoading(true);
@@ -40,6 +64,7 @@ const Customers = () => {
         address: address,
       };
       const result = await create(data);
+      setList(null);
       if (result.data) {
         setAlert({
           ...alert,
@@ -78,6 +103,7 @@ const Customers = () => {
         address: address,
       };
       const result = await update(id, data);
+      setList(null);
       if (result.data) {
         setAlert({
           ...alert,
@@ -144,6 +170,7 @@ const Customers = () => {
       setLoading(true);
 
       const result = await remove(id);
+      setList(null);
       if (result.data) {
         setId("");
         setAddress("");
@@ -217,7 +244,7 @@ const Customers = () => {
         style={{
           flexDirection: "row",
           width: "100%",
-          marginTop: "70px",
+          marginTop: "50px",
           fontWeight: "bold",
         }}
       >
@@ -260,7 +287,7 @@ const Customers = () => {
               <Form.Label>Nombre Completo</Form.Label>
               <Form.Control
                 disabled={loading}
-                style={{ marginTop: 20 }}
+                style={{ marginTop: 10 }}
                 type="text"
                 onChange={(e) => {
                   setName(e.target.value);
@@ -274,7 +301,7 @@ const Customers = () => {
               <Form.Label>Correo Electrónico</Form.Label>
               <Form.Control
                 disabled={loading}
-                style={{ marginTop: 20 }}
+                style={{ marginTop: 10 }}
                 type="text"
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -307,7 +334,7 @@ const Customers = () => {
 
         <Row
           style={{
-            marginTop: 50,
+            marginTop: 20,
           }}
         >
           <div
@@ -373,6 +400,43 @@ const Customers = () => {
               )}
             </Button>
           </div>
+        </Row>
+
+        <Row>
+          <Table
+            striped
+            bordered
+            hover
+            style={{
+              marginTop: 20,
+              alignContent: "center",
+              justifyContent: "center",
+            }}
+          >
+            <thead>
+              <tr>
+                <th>CEDULA</th>
+                <th>TELÉFONO</th>
+                <th>NOMBRE</th>
+                <th>EMAIL</th>
+                <th>DIRECCIÓN</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {list?.map((item) => {
+                return (
+                  <tr>
+                    <td>{item.identification}</td>
+                    <td>{item.phone}</td>
+                    <td>{item.username}</td>
+                    <td>{item.email}</td>
+                    <td>{item.address}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
         </Row>
       </Container>
       <Snackbar

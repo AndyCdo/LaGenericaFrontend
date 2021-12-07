@@ -1,20 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import ImageBackground from "../../Assets/background.jpg";
-import {
-  Navbar,
-  Container,
-  Nav,
-  Button,
-  Row,
-  Col,
-  Table,
-} from "react-bootstrap";
+import { Navbar, Container, Nav, Row, Table, Col } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const Reports = () => {
-  const [list, setList] = useState();
-
   return (
     <>
       <img
@@ -42,10 +32,10 @@ const Reports = () => {
             <Nav.Link href="/sales">Ventas</Nav.Link>
             <Nav.Link href="/products">Productos</Nav.Link>
             <Nav.Link href="/customers">Clientes</Nav.Link>
-            <Nav.Link active href="/reports">
-              Reportes
+            <Nav.Link href="/reports">Reportes</Nav.Link>
+            <Nav.Link active href="/consolidated">
+              Consolidación
             </Nav.Link>
-            <Nav.Link href="/reports">Consolidación</Nav.Link>
             <Navbar.Brand href="/welcome" style={{ marginLeft: 20 }}>
               <LogoutIcon />
             </Navbar.Brand>
@@ -66,148 +56,68 @@ const Reports = () => {
           marginLeft: "auto",
         }}
       >
-        <Container style={{ marginTop: 200 }}>
+        <Container style={{ marginTop: 100 }}>
           <Row>
-            <Col sm="6" xs="12">
-              <Button
-                className="mb-3 w-100"
-                onClick={() => {
-                  setList("customers");
-                }}
-                style={{ fontWeight: "bold" }}
-                variant="outline-primary"
-              >
-                Listado de clientes
-              </Button>
-            </Col>
-            <Col sm="6" xs="12">
-              <Button
-                className="mb-3 w-100"
-                onClick={() => {
-                  setList("sales");
-                }}
-                style={{ fontWeight: "bold" }}
-                variant="outline-success"
-              >
-                Ventas por Cliente
-              </Button>
-            </Col>
+            <div
+              style={{
+                textAlign: "center",
+                width: "100%",
+                marginTop: 20,
+                fontWeight: "bold",
+              }}
+            >
+              Total de Ventas por Ciudad
+            </div>
           </Row>
 
-          {list === "customers" && (
-            <>
-              <Row>
-                <div
-                  style={{
-                    textAlign: "center",
-                    width: "100%",
-                    marginTop: 30,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Listado de Clientes
-                </div>
-              </Row>
+          <Row>
+            <Table
+              striped
+              bordered
+              hover
+              style={{
+                marginTop: 20,
+                alignContent: "center",
+                justifyContent: "center",
+              }}
+            >
+              <thead>
+                <tr>
+                  <th>CIUDAD</th>
+                  <th>VALOR TOTAL VENTAS</th>
+                </tr>
+              </thead>
 
-              <Row>
-                <Table
-                  striped
-                  bordered
-                  hover
-                  style={{
-                    marginTop: 20,
-                    alignContent: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <thead>
-                    <tr>
-                      <th>CEDULA</th>
-                      <th>NOMBRE</th>
-                      <th>CORREO ELECTRONICO</th>
-                      <th>DIRECCION</th>
-                      <th>CORREO ELECTRONICO</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Row>
-            </>
-          )}
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </Table>
+          </Row>
 
-          {list === "sales" && (
-            <>
-              <Row>
-                <div
-                  style={{
-                    textAlign: "center",
-                    width: "100%",
-                    marginTop: 30,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Total de Ventas por Cliente
-                </div>
-              </Row>
-
-              <Row>
-                <Table
-                  striped
-                  bordered
-                  hover
-                  style={{
-                    marginTop: 20,
-                    alignContent: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <thead>
-                    <tr>
-                      <th>CEDULA</th>
-                      <th>NOMBRE</th>
-                      <th>VALOR TOTAL VENTAS </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Row>
-
-              <Row>
-                <Col sm={4}></Col>
-                <Col style={{ textAlign: "right", fontWeight: "bold" }} sm={4}>
-                  Total Ventas $
-                </Col>
-                <Col sm={4}>
-                  <div
-                    style={{
-                      backgroundColor: "white",
-                      border: "1px solid black",
-                      width: "100%",
-                      borderRadius: 5,
-                      textAlign: "right",
-                      padding: "0 10px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    55000
-                  </div>
-                </Col>
-              </Row>
-            </>
-          )}
+          <Row>
+            <Col sm={4}></Col>
+            <Col style={{ textAlign: "right", fontWeight: "bold" }} sm={4}>
+              Total Ventas Tienda $
+            </Col>
+            <Col sm={4}>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  border: "1px solid black",
+                  width: "100%",
+                  borderRadius: 5,
+                  textAlign: "right",
+                  padding: "0 10px",
+                  fontWeight: "bold",
+                }}
+              >
+                55000
+              </div>
+            </Col>
+          </Row>
         </Container>
       </div>
     </>
