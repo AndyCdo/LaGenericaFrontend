@@ -21,8 +21,8 @@ const Login = () => {
 
   const loginRequest = async () => {
     try {
-      // await auth(username, password);
-      navigate("/home");
+      const result = await auth(username, password);
+      navigate("/products");
     } catch {
       setAlert({
         ...alert,
@@ -90,7 +90,6 @@ const Login = () => {
             Usuario
           </Form.Label>
           <Form.Control
-            type="email"
             placeholder="Enter email"
             value={username}
             onChange={(e) => {
@@ -118,7 +117,6 @@ const Login = () => {
             loginRequest();
           }}
           variant="primary"
-          type="submit"
         >
           Iniciar Sesión
         </Button>

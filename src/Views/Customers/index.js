@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageBackground from "../../Assets/background.jpg";
 import {
   Navbar,
@@ -13,6 +13,83 @@ import HomeIcon from "@mui/icons-material/Home";
 import { create, read, remove, update } from "../../Services/customers";
 
 const Customers = () => {
+  const [id, setId] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [alert, setAlert] = useState({
+    open: false,
+    severity: "error",
+    message: "",
+  });
+
+  const createRequest = async () => {
+    try {
+      const data = {
+        identification: id,
+        phone: telephone,
+        name: name,
+        email: email,
+        address: address,
+      };
+      const result = await create(data);
+    } catch {
+      setAlert({
+        ...alert,
+        severity: "error",
+        message: "No se pudo crear el usuario",
+        open: true,
+      });
+    }
+  };
+
+  const updateRequest = async () => {
+    try {
+      const data = {
+        identification: id,
+        phone: telephone,
+        name: name,
+        email: email,
+        address: address,
+      };
+      const result = await update(id, data);
+    } catch {
+      setAlert({
+        ...alert,
+        severity: "error",
+        message: "No se pudo actualizar el usuario",
+        open: true,
+      });
+    }
+  };
+
+  const readRequest = async () => {
+    try {
+      const result = await read(id);
+    } catch {
+      setAlert({
+        ...alert,
+        severity: "error",
+        message: "No se pudo leer el usuario",
+        open: true,
+      });
+    }
+  };
+
+  const removeRequest = async () => {
+    try {
+      const result = await remove(id);
+    } catch {
+      setAlert({
+        ...alert,
+        severity: "error",
+        message: "No se pudo eliminar el usuario",
+        open: true,
+      });
+    }
+  };
+
   return (
     <>
       <img
@@ -61,6 +138,10 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10 }}
               type="text"
+              onChange={(e) => {
+                setId(e.target.value);
+              }}
+              value={id}
             />
           </Col>
 
@@ -71,6 +152,10 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10 }}
               type="text"
+              onChange={(e) => {
+                setTelephone(e.target.value);
+              }}
+              value={telephone}
             />
           </Col>
         </Row>
@@ -83,6 +168,10 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10, marginTop: 20 }}
               type="text"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              value={name}
             />
           </Col>
           <Form.Label column sm="2">
@@ -92,6 +181,10 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10, marginTop: 20 }}
               type="text"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              value={email}
             />
           </Col>
         </Row>
@@ -104,6 +197,10 @@ const Customers = () => {
             <Form.Control
               style={{ width: "300px", marginLeft: 10, marginTop: 10 }}
               type="text"
+              onChange={(e) => {
+                setAddress(e.target.value);
+              }}
+              value={address}
             />
           </Col>
 
@@ -126,16 +223,43 @@ const Customers = () => {
               width: "100%",
             }}
           >
-            <Button variant="primary" size="lg">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => {
+                readRequest();
+              }}
+            >
               Consultar
             </Button>
-            <Button variant="primary" size="lg" style={{ marginLeft: 20 }}>
+            <Button
+              variant="primary"
+              size="lg"
+              style={{ marginLeft: 20 }}
+              onClick={() => {
+                createRequest();
+              }}
+            >
               Crear
             </Button>
-            <Button variant="primary" size="lg" style={{ marginLeft: 20 }}>
+            <Button
+              variant="primary"
+              size="lg"
+              style={{ marginLeft: 20 }}
+              onClick={() => {
+                updateRequest();
+              }}
+            >
               Actualizar
             </Button>
-            <Button variant="danger" size="lg" style={{ marginLeft: 20 }}>
+            <Button
+              variant="danger"
+              size="lg"
+              style={{ marginLeft: 20 }}
+              onClick={() => {
+                removeRequest();
+              }}
+            >
               Borrar
             </Button>
           </div>

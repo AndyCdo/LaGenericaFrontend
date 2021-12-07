@@ -47,53 +47,224 @@ const Sales = () => {
       <Container
         style={{
           flexDirection: "row",
-          width: "100%",
+          width: "80%",
           marginTop: "70px",
           fontWeight: "bold",
         }}
       >
         <Row>
-          <Form.Label column sm="1">
+          <Form.Label style={{ marginLeft: 10 }} column sm="1">
             Cédula
           </Form.Label>
-          <Col sm="1">
+          <Col sm="2">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+
+          <Col sm="2">
+            <Button style={{ width: "100px", marginLeft: 20 }} type="text">
+              Consultar
+            </Button>
+          </Col>
+
+          <Form.Label style={{ marginLeft: 10 }} column sm="1">
+            Cliente
+          </Form.Label>
+          <Col sm="2">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+
+          <Form.Label style={{ marginLeft: 20 }} column sm="1">
+            Consec.
+          </Form.Label>
+          <Col sm="2">
+            <Form.Control style={{ width: "100px" }} type="text" />
+          </Col>
+        </Row>
+
+        <Row
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+            display: "flex",
+            width: "90%",
+            marginTop: "40px",
+          }}
+        >
+          <Form.Label column sm="2" style={{ marginTop: 30 }}>
+            Cod. Producto
+          </Form.Label>
+
+          <Form.Label column sm="2" style={{ marginTop: 30 }} />
+
+          <Form.Label column sm="3" style={{ marginTop: 30 }}>
+            Nombre Producto
+          </Form.Label>
+
+          <Form.Label column sm="3" style={{ marginTop: 30 }}>
+            Cant.
+          </Form.Label>
+
+          <Form.Label column sm="2" style={{ marginTop: 30 }}>
+            Vlr. Total
+          </Form.Label>
+
+          <Col sm="2">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+
+          <Col sm="2">
+            <Button style={{ width: "100px", marginLeft: 40 }} type="text">
+              Consultar
+            </Button>
+          </Col>
+
+          <Col sm="3">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+          <Col sm="3">
             <Form.Control
-              style={{ width: "300px", marginLeft: 10 }}
+              style={{ width: "200px", marginTop: 10 }}
               type="text"
-              placeholder="Normal text"
+            />
+          </Col>
+          <Col sm="2">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+
+          <Col sm="2">
+            <Form.Control
+              style={{ width: "200px", marginTop: 10 }}
+              type="text"
             />
           </Col>
 
-          <Col sm="1">
+          <Col sm="2">
             <Button
-              style={{ width: "300px", marginLeft: 10 }}
+              style={{ width: "100px", marginLeft: 40, marginTop: 10 }}
               type="text"
-              placeholder="Normal text"
             >
               Consultar
             </Button>
           </Col>
 
-          <Form.Label column sm="1">
-            Cliente
-          </Form.Label>
-          <Col sm="1">
+          <Col sm="3">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+          <Col sm="3">
             <Form.Control
-              style={{ width: "300px", marginLeft: 10 }}
+              style={{ width: "200px", marginTop: 10 }}
               type="text"
-              placeholder="Normal text"
+            />
+          </Col>
+          <Col sm="2">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+
+          <Col sm="2">
+            <Form.Control
+              style={{ width: "200px", marginTop: 10 }}
+              type="text"
             />
           </Col>
 
-          <Form.Label column sm="1">
-            Consec.
+          <Col sm="2">
+            <Button
+              style={{ width: "100px", marginLeft: 40, marginTop: 10 }}
+              type="text"
+            >
+              Consultar
+            </Button>
+          </Col>
+
+          <Col sm="3">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+          <Col sm="3">
+            <Form.Control
+              style={{ width: "200px", marginTop: 10 }}
+              type="text"
+            />
+          </Col>
+          <Col sm="2">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+        </Row>
+
+        <Row
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+            display: "flex",
+            width: "83%",
+            marginTop: "30px",
+          }}
+        >
+          <Col sm="8" />
+          <Form.Label style={{ width: "200px", marginLeft: 20 }} column sm="2">
+            Total Venta
           </Form.Label>
           <Col sm="1">
-            <Form.Control
-              style={{ width: "300px", marginLeft: 10 }}
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+        </Row>
+
+        <Row
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+            display: "flex",
+            width: "83%",
+            marginTop: "10px",
+          }}
+        >
+          <Col sm="8" />
+          <Form.Label style={{ width: "200px", marginLeft: 20 }} column sm="2">
+            Total IVA
+          </Form.Label>
+          <Col sm="1">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+        </Row>
+
+        <Row
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+            display: "flex",
+            width: "83%",
+            marginTop: "10px",
+          }}
+        >
+          <Col sm="8" />
+          <Form.Label style={{ width: "200px", marginLeft: 20 }} column sm="2">
+            Total con IVA
+          </Form.Label>
+          <Col sm="1">
+            <Form.Control style={{ width: "200px" }} type="text" />
+          </Col>
+        </Row>
+
+        <Row
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+            display: "flex",
+            width: "83%",
+            marginTop: "10px",
+          }}
+        >
+          <Col sm="2">
+            <Button
+              style={{ width: "200px", marginLeft: 40, marginTop: 10 }}
               type="text"
-              placeholder="Normal text"
-            />
+            >
+              Confirmar
+            </Button>
           </Col>
         </Row>
       </Container>
