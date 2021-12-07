@@ -10,6 +10,7 @@ import {
   Col,
 } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Snackbar, Alert } from "@mui/material";
 
 const Sales = () => {
@@ -50,6 +51,10 @@ const Sales = () => {
             <Nav.Link href="/products">Productos</Nav.Link>
             <Nav.Link href="/customers">Clientes</Nav.Link>
             <Nav.Link href="/reports">Reportes</Nav.Link>
+            <Nav.Link href="/reports">Consolidación</Nav.Link>
+            <Navbar.Brand href="/welcome" style={{ marginLeft: 20 }}>
+              <LogoutIcon />
+            </Navbar.Brand>
           </Nav>
         </Container>
       </Navbar>

@@ -2,6 +2,7 @@ import React from "react";
 import ImageBackground from "../../Assets/background.jpg";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 
@@ -36,6 +37,10 @@ const Products = () => {
             </Nav.Link>
             <Nav.Link href="/customers">Clientes</Nav.Link>
             <Nav.Link href="/reports">Reportes</Nav.Link>
+            <Nav.Link href="/reports">Consolidación</Nav.Link>
+            <Navbar.Brand href="/welcome" style={{ marginLeft: 20 }}>
+              <LogoutIcon />
+            </Navbar.Brand>
           </Nav>
         </Container>
       </Navbar>

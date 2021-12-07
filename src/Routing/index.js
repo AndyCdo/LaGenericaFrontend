@@ -8,6 +8,7 @@ import Sales from "../Views/Sales";
 import Products from "../Views/Products";
 import Customers from "../Views/Customers";
 import Reports from "../Views/Reports";
+import Consolidated from "../Views/Consolidated";
 
 const Routing = () => {
   return (
@@ -21,6 +22,7 @@ const Routing = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/customers" element={<Customers />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/consolidated" element={<Consolidated />} />
         <Route path="*" element={<Navigate replace to="/welcome" />} />
       </Routes>
     </BrowserRouter>
