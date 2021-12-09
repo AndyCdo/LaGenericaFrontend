@@ -11,9 +11,36 @@ import {
 } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { readAll as readAllCustomer } from "../../Services/customers";
+import { readAllSalesByCustomer } from "../../Services/sales";
 
 const Reports = () => {
   const [list, setList] = useState();
+  const [customerList, setCustomerList] = useState();
+  const [salesList, setSalesList] = useState();
+  const [total, setTotal] = useState(0);
+
+  const readAllRequest = async () => {
+    try {
+      const result = await readAllCustomer();
+      if (result.ok) {
+        setCustomerList(result.data);
+      }
+    } catch {}
+  };
+
+  const readAllSalesRequest = async () => {
+    try {
+      const result = await readAllSalesByCustomer();
+      if (result.ok) {
+        setSalesList(result.data);
+        const saleTotal = result.data.reduce((sum, current) => {
+          return sum + current.total;
+        }, 0);
+        setTotal(saleTotal);
+      }
+    } catch {}
+  };
 
   return (
     <>
@@ -73,8 +100,9 @@ const Reports = () => {
                 className="mb-3 w-100"
                 onClick={() => {
                   setList("customers");
+                  readAllRequest();
                 }}
-                style={{ fontWeight: "bold" }}
+                style={{ fontWeight: "bold", marginTop: 50 }}
                 variant="outline-primary"
               >
                 Listado de clientes
@@ -85,8 +113,9 @@ const Reports = () => {
                 className="mb-3 w-100"
                 onClick={() => {
                   setList("sales");
+                  readAllSalesRequest();
                 }}
-                style={{ fontWeight: "bold" }}
+                style={{ fontWeight: "bold", marginTop: 50 }}
                 variant="outline-success"
               >
                 Ventas por Cliente
@@ -126,16 +155,21 @@ const Reports = () => {
                       <th>NOMBRE</th>
                       <th>CORREO ELECTRONICO</th>
                       <th>DIRECCION</th>
-                      <th>CORREO ELECTRONICO</th>
+                      <th>TELÉFONO</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
+                    {customerList?.map((item) => {
+                      return (
+                        <tr>
+                          <td>{item.identification}</td>
+                          <td>{item.name}</td>
+                          <td>{item.email}</td>
+                          <td>{item.address}</td>
+                          <td>{item.phone}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </Table>
               </Row>
@@ -176,11 +210,15 @@ const Reports = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
+                    {salesList?.map((item) => {
+                      return (
+                        <tr>
+                          <td>{item.identification}</td>
+                          <td>{item.customerName}</td>
+                          <td>{item.total}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </Table>
               </Row>
@@ -202,7 +240,7 @@ const Reports = () => {
                       fontWeight: "bold",
                     }}
                   >
-                    55000
+                    {total}
                   </div>
                 </Col>
               </Row>
