@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useDebugValue, useEffect, useState } from "react";
 import ImageBackground from "../../Assets/background.jpg";
 import { Navbar, Container, Nav, Row, Table, Col } from "react-bootstrap";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { readAll } from "../../Services/consolidated";
 
-const Reports = () => {
+const Consolidated = () => {
+  const [consolidated, setConsolidated] = useState(null);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    if (consolidated === null) {
+      readAllRequest();
+    }
+  }, [consolidated]);
+
+  const readAllRequest = async () => {
+    try {
+      const result = await readAll();
+      if (result.ok) {
+        setConsolidated(result.data);
+        const saleTotal = result.data.reduce((sum, current) => {
+          return sum + current.total;
+        }, 0);
+        setTotal(saleTotal);
+      }
+    } catch {}
+  };
+
   return (
     <>
       <img
@@ -89,10 +112,14 @@ const Reports = () => {
               </thead>
 
               <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                </tr>
+                {consolidated?.map((item) => {
+                  return (
+                    <tr>
+                      <td>{item.city}</td>
+                      <td>{item.total}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
           </Row>
@@ -114,7 +141,7 @@ const Reports = () => {
                   fontWeight: "bold",
                 }}
               >
-                55000
+                {total}
               </div>
             </Col>
           </Row>
@@ -124,4 +151,4 @@ const Reports = () => {
   );
 };
 
-export default Reports;
+export default Consolidated;

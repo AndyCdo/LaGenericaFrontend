@@ -58,7 +58,7 @@ const Sales = () => {
         const result = await lastSale();
         setLast(result.ok);
         if (result.ok) {
-          setconsecutive(parseInt(result.data.code) + 1);
+          setconsecutive(parseInt(result?.data?.code || 0) + 1);
         }
       }
     };

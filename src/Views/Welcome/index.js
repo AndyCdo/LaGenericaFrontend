@@ -48,6 +48,7 @@ const Welcome = () => {
       >
         <Button
           onClick={() => {
+            localStorage.setItem("city", "bogota");
             navigate("/login/Bogotá");
           }}
           style={{ width: 300, fontWeight: "bold" }}
@@ -57,6 +58,7 @@ const Welcome = () => {
         </Button>
         <Button
           onClick={() => {
+            localStorage.setItem("city", "medellin");
             navigate("/login/Medellín");
           }}
           style={{ width: 300, fontWeight: "bold" }}
@@ -66,6 +68,7 @@ const Welcome = () => {
         </Button>
         <Button
           onClick={() => {
+            localStorage.setItem("city", "cali");
             navigate("/login/Cali");
           }}
           style={{ width: 300, fontWeight: "bold" }}
